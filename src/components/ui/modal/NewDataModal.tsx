@@ -13,7 +13,12 @@ export const NewDataModal = ({isOpen, onClose, initialData}: NewDataModal) => {
   const [form] = Form.useForm()
   const addData = useTableStore((state) => state.addData)
   const updateData = useTableStore((state) => state.updateData)
+  const setEditData = useTableStore((state) => state.setEditData)
+  // const editData = useTableStore.getInitialState().editData
+
   useEffect(() => {
+	// console.log('init', initialData)
+	// console.log('edit', editData)
 	if (initialData) {
 	  form.setFieldsValue({
 		name: initialData.name,
@@ -21,9 +26,9 @@ export const NewDataModal = ({isOpen, onClose, initialData}: NewDataModal) => {
 		value: initialData.value,
 	  });
 	} else {
-	  form.resetFields();
+	  form.resetFields()
 	}
-  }, [initialData, form]);
+  }, [initialData, form])
   const handleSubmit  = async () => {
 	try {
 	  const values = await form.validateFields()
@@ -37,6 +42,7 @@ export const NewDataModal = ({isOpen, onClose, initialData}: NewDataModal) => {
 
 	  if (initialData) {
 		updateData(prepared)
+		setEditData(null)
 	  } else {
 		addData(prepared)
 	  }
