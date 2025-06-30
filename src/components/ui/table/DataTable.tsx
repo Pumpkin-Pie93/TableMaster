@@ -2,13 +2,16 @@ import {Table} from 'antd';
 import type {ColumnsType} from 'antd/es/table';
 import {type StoreState, useTableStore} from "../../../store/useTableStore.ts"
 import type {Data} from "../../../types/Data.ts"
+import {useMemo} from "react"
 
 type DataTable = {
   onEdit: (data:Data) => void
   onDelete: (data:Data) => void
 }
-const DataTable = ({onEdit, onDelete}:DataTable) => {
-  const data = useTableStore((state: StoreState) => state.data);
+export const DataTable = ({onEdit, onDelete}:DataTable) => {
+  const data = useTableStore((state: StoreState) => state.data)
+  const searchValue = useTableStore((s) => s.searchValue)
+  const filter = useTableStore((s) => s.filter)
   const columns: ColumnsType<Data> = [
 	{
 	  title: 'Имя',
@@ -38,9 +41,34 @@ const DataTable = ({onEdit, onDelete}:DataTable) => {
 		</div>
 	  ),
 	},
-  ];
+  ]
 
-  return <Table columns={columns} dataSource={data} rowKey="id"/>;
-};
+  const filteredData = useMemo(() => {
+	if (!searchValue.trim()) return data
+	const lower = searchValue.toLowerCase()
 
-export default DataTable;
+	return data.filter((row) => {
+	  if (filter === 'all') {
+		return Object.entries(row).some(([key, val]) => {
+		  if (key === 'value') {
+			// Приводим к числу и обратно к строке, чтобы убрать ведущие нули
+			const normalizedSearch = String(Number(searchValue))
+			return String(val).includes(normalizedSearch)
+		  } else {
+			return String(val).toLowerCase().includes(lower)
+		  }
+		})
+	  }
+
+	  const field = row[filter]
+
+	  if (filter === 'value') {
+		const normalizedSearch = String(Number(searchValue))
+		return String(field).includes(normalizedSearch)
+	  }
+
+	  return String(field).toLowerCase().includes(lower)
+	})
+  }, [data, filter, searchValue])
+  return <Table columns={columns} dataSource={filteredData} rowKey="id"/>
+}
