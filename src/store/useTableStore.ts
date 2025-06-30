@@ -22,5 +22,5 @@ export const useTableStore = create<StoreState>((set) => ({
   deleteData: (id) =>
 	set((state) => ({ data: state.data.filter((e) => e.id !== id) })),
   setEditData:(editData:Data | null)=>
-	set((state)=>({editData}))
+	set(()=>({editData}))
 }))

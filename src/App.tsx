@@ -5,17 +5,32 @@ import {useState} from "react"
 import {NewDataModal} from "./components/ui/modal/NewDataModal.tsx"
 import {useTableStore} from "./store/useTableStore.ts"
 import type {Data} from "./types/Data.ts"
+import DeleteModal from "./components/ui/modal/DeleteModal.tsx"
 
 function App() {
   const [isOpenCreateModal, setIsOpenCreateModal] = useState(false)
+  const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
+  const [selectedToDelete, setSelectedToDelete] = useState<Data | null>(null);
+  const deleteData = useTableStore((state) => state.deleteData);
   const editData = useTableStore((state) => state.editData)
   const setEditData = useTableStore((state) => state.setEditData)
+
   const editDataHandler = (data:Data | null) => {
-    console.log('before', editData)
     setEditData(data)
     setIsOpenCreateModal(true)
-    console.log('after', editData)
+  }
 
+  const handleDeleteClick = (data: Data) => {
+    setSelectedToDelete(data)
+    setIsDeleteModalOpen(true)
+  }
+
+  const confirmDelete = () => {
+    if (selectedToDelete) {
+      deleteData(selectedToDelete.id)
+      setSelectedToDelete(null)
+      setIsDeleteModalOpen(false)
+    }
   }
 
   return (
@@ -25,7 +40,7 @@ function App() {
         setIsOpenCreateModal(true)
       }
       }>Add Row</Button>
-      <DataTable onEdit={editDataHandler}/>
+      <DataTable onEdit={editDataHandler} onDelete={handleDeleteClick}/>
       {isOpenCreateModal &&
         <NewDataModal
           isOpen={isOpenCreateModal}
@@ -33,6 +48,15 @@ function App() {
           initialData={editData}
         />
       }
+      {isDeleteModalOpen &&
+        <DeleteModal
+          data={selectedToDelete}
+          onConfirm={confirmDelete}
+          isOpen={isDeleteModalOpen}
+          onClose={()=>{
+            setIsDeleteModalOpen(false)
+            setSelectedToDelete(null)
+          }}/>}
     </>
 
   )

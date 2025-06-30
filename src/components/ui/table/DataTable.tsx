@@ -5,10 +5,10 @@ import type {Data} from "../../../types/Data.ts"
 
 type DataTable = {
   onEdit: (data:Data) => void
+  onDelete: (data:Data) => void
 }
-const DataTable = ({onEdit}:DataTable) => {
+const DataTable = ({onEdit, onDelete}:DataTable) => {
   const data = useTableStore((state: StoreState) => state.data);
-  // const setEditData = useTableStore((state) => state.setEditData)
   const columns: ColumnsType<Data> = [
 	{
 	  title: 'Имя',
@@ -34,8 +34,7 @@ const DataTable = ({onEdit}:DataTable) => {
 	  render: (_, data) => (
 		<div>
 		  <button onClick={() => onEdit(data)}>✏️</button>
-		  {/*<button onClick={() => console.log('Редактировать', data)}>✏️</button>*/}
-		  <button onClick={() => console.log('Удалить', data)}>🗑️</button>
+		  <button onClick={() => onDelete(data)}>🗑️</button>
 		</div>
 	  ),
 	},

@@ -14,11 +14,8 @@ export const NewDataModal = ({isOpen, onClose, initialData}: NewDataModal) => {
   const addData = useTableStore((state) => state.addData)
   const updateData = useTableStore((state) => state.updateData)
   const setEditData = useTableStore((state) => state.setEditData)
-  // const editData = useTableStore.getInitialState().editData
 
   useEffect(() => {
-	// console.log('init', initialData)
-	// console.log('edit', editData)
 	if (initialData) {
 	  form.setFieldsValue({
 		name: initialData.name,
