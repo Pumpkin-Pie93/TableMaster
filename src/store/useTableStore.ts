@@ -16,9 +16,7 @@ export interface StoreState {
 }
 
 export const useTableStore = create<StoreState>((set) => ({
-  data: [
-	{date:"20.05.1993", id:"bb0f5313-af8a-44a3-b723-8e003407da09", name:"Jane Doy", value:1},
-  ],
+  data: [],
   editData: null,
   filter:'all',
   searchValue:'',
