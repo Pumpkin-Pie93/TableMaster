@@ -46,30 +46,21 @@ export const DataTable = ({onEdit, onDelete}:DataTable) => {
 
   const filteredData = useMemo(() => {
 	if (!searchValue.trim()) return data
-	const lower = searchValue.toLowerCase()
+	const searchStr = String(searchValue).toLowerCase()
 
 	return data.filter((row) => {
 	  if (filter === 'all') {
 		return Object.entries(row).some(([key, val]) => {
-		  if (key === 'value') {
-			// Приводим к числу и обратно к строке, чтобы убрать ведущие нули
-			const normalizedSearch = String(Number(searchValue))
-			return String(val).includes(normalizedSearch)
-		  } else {
-			return String(val).toLowerCase().includes(lower)
-		  }
+		  if (key === 'id') return false
+		  return String(val).toLowerCase().includes(searchStr)
 		})
 	  }
 
 	  const field = row[filter]
-
-	  if (filter === 'value') {
-		const normalizedSearch = String(Number(searchValue))
-		return String(field).includes(normalizedSearch)
-	  }
-
-	  return String(field).toLowerCase().includes(lower)
+	  return String(field).toLowerCase().includes(searchStr)
 	})
   }, [data, filter, searchValue])
+
+
   return <Table columns={columns} dataSource={filteredData} rowKey="id" className={s.table} pagination={{pageSize:5}}/>
 }

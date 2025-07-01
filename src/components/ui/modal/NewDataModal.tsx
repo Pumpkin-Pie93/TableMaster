@@ -33,7 +33,7 @@ export const NewDataModal = ({isOpen, onClose, initialData}: NewDataModal) => {
 	  const prepared: Data = {
 		id: initialData?.id || crypto.randomUUID(),
 		name: values.name.trim(),
-		date: values.date.format('YYYY-MM-DD'),
+		date: values.date.format('DD.MM.YYYY'),
 		value: values.value,
 	  };
 
@@ -77,7 +77,7 @@ export const NewDataModal = ({isOpen, onClose, initialData}: NewDataModal) => {
 			label="Дата"
 			rules={[{ required: true, message: 'Пожалуйста, выберите дату' }]}
 		  >
-			<DatePicker style={{ width: '100%' }} />
+			<DatePicker style={{ width: '100%' }} format="DD.MM.YYYY"/>
 		  </Form.Item>
 
 		  <Form.Item
