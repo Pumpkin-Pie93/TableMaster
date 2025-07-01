@@ -19,7 +19,7 @@ export const NewDataModal = ({isOpen, onClose, initialData}: NewDataModal) => {
 	if (initialData) {
 	  form.setFieldsValue({
 		name: initialData.name,
-		date: dayjs(initialData.date),
+		date: dayjs(initialData.date, 'DD.MM.YYYY'),
 		value: initialData.value,
 	  });
 	} else {
