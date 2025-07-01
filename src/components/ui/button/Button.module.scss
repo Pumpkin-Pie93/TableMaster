@@ -1,0 +1,18 @@
+.button{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 6px 12px;
+  font-size: 14px;
+  font-weight: 600;
+  border-radius: 5px;
+  background-color: cornflowerblue;
+  border: 1px solid cornflowerblue;
+  min-width: 16px;
+  color: #252323;
+  &:hover{
+    cursor: pointer;
+    background-color: white;
+    color: cornflowerblue;
+  }
+}

@@ -41,13 +41,13 @@ function App() {
 
   return (
     <section style={{minWidth:'660px'}}>
-      <div style={{display:'flex', justifyContent:'space-between', width:'100%', backgroundColor:'blueviolet', alignItems:'center'}}>
+      <div className={'searchBox'}>
+        <SearchInput value={searchValue} onColumnChange={setFilter} onChange={setSearchValue} selectedColumn={filter}/>
         <Button action={() => {
           setEditData(null)
           setIsOpenCreateModal(true)
         }
-        }>Add Row</Button>
-        <SearchInput value={searchValue} onColumnChange={setFilter} onChange={setSearchValue} selectedColumn={filter}/>
+        }>Добавить строку</Button>
       </div>
 
       <DataTable onEdit={editDataHandler} onDelete={handleDeleteClick}/>

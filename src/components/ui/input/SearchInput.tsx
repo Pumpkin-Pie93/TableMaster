@@ -1,5 +1,6 @@
-import {Input, Select, Space} from "antd"
+import {Input, Select} from "antd"
 import type {Filter} from "../../../store/useTableStore.ts"
+import s from './SearchInput.module.scss'
 
 type SearchInput = {
   value: string
@@ -16,17 +17,13 @@ const options = [
 ]
 export const SearchInput = ({onChange,onColumnChange, selectedColumn,value}:SearchInput) => {
   return (
-	<Space direction="vertical" size="middle" style={{flexGrow:'1', width:'100%'}}>
-	  <Space.Compact>
-		<Select value={selectedColumn}
-				onChange={onColumnChange}
-				options={options}/>
-		<Input
-		  placeholder={'Поиск...'}
-		  value={value}
-		  onChange={(e) => onChange(e.target.value)}
-		/>
-	  </Space.Compact>
-	</Space>
+	<div className={s.inputBox}>
+	  <Select value={selectedColumn} onChange={onColumnChange} options={options}/>
+	  <Input
+		placeholder={'Поиск...'}
+		value={value}
+		onChange={(e) => onChange(e.target.value)}
+	  />
+	</div>
   )
 }

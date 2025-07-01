@@ -1,0 +1,50 @@
+// DataTable.module.scss
+.table {
+  border-radius: 8px;
+  overflow: hidden;
+  margin-top: 1rem;
+  border: 1px solid rgb(210, 211, 195);
+  min-height: 470px;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+
+  // кастомизация заголовков
+  :global(.ant-table-thead > tr > th) {
+    background-color: rgb(101, 150, 237);
+    font-weight: 600;
+  }
+
+  // кастомизация строк
+  :global(.ant-table-tbody > tr > td) {
+    background-color: rgba(113, 168, 246, 0.12);
+    transition: background-color 0.3s;
+    flex-grow: 1;
+
+    // наведение
+    &:hover {
+      background: rgb(210, 211, 195);
+    }
+  }
+
+  // кнопки действий
+  :global(.ant-table-cell:last-child) {
+    text-align: center;
+
+    button {
+      margin: 0 4px;
+      padding: 6px;
+      opacity: 0.7;
+      background: none;
+      border: none;
+      cursor: pointer;
+      font-size: 16px;
+
+      &:hover {
+        opacity: 1;
+        //background-color: rgba(214, 214, 214, 0.45);
+        //border-radius: 9999px;
+      }
+    }
+  }
+}

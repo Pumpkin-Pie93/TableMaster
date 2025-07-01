@@ -3,6 +3,7 @@ import type {ColumnsType} from 'antd/es/table';
 import {type StoreState, useTableStore} from "../../../store/useTableStore.ts"
 import type {Data} from "../../../types/Data.ts"
 import {useMemo} from "react"
+import s from './DataTable.module.scss'
 
 type DataTable = {
   onEdit: (data:Data) => void
@@ -70,5 +71,5 @@ export const DataTable = ({onEdit, onDelete}:DataTable) => {
 	  return String(field).toLowerCase().includes(lower)
 	})
   }, [data, filter, searchValue])
-  return <Table columns={columns} dataSource={filteredData} rowKey="id"/>
+  return <Table columns={columns} dataSource={filteredData} rowKey="id" className={s.table} pagination={{pageSize:5}}/>
 }
